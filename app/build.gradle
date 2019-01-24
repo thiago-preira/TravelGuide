@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.udacity.android.travelguide"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def firebase_auth_version = "16.0.1"
+    def firebase_core = "16.0.6"
+    def firebase_ui_version = "4.3.0"
+    def support_version = "28.0.0"
+    def lifecycle_version = "1.1.0"
+    def parceler_version="1.1.11"
+    def recyclerview_version = "28.0.0"
+    def firebase_realtime = "16.0.5"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:support-v4:$support_version"
+
+
+    //RECYCLER-VIEW
+    implementation "com.android.support:recyclerview-v7:$recyclerview_version"
+
+    //FIREBASE
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+    implementation "com.firebaseui:firebase-ui-auth:$firebase_ui_version"
+    implementation "com.google.firebase:firebase-core:$firebase_core"
+    implementation "com.google.firebase:firebase-database:$firebase_realtime"
+
+    //SUPPORT
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+
+    //LIFECYCLE
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
+
+    //PARCEL
+    implementation "org.parceler:parceler-api:$parceler_version"
+    annotationProcessor "org.parceler:parceler:$parceler_version"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+apply plugin: 'com.google.gms.google-services'
