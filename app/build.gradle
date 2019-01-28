@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -27,6 +28,7 @@ dependencies {
     def parceler_version="1.1.11"
     def recyclerview_version = "28.0.0"
     def firebase_realtime = "16.0.5"
+    def picasso_version = "2.5.2"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$support_version"
@@ -56,6 +58,9 @@ dependencies {
     //PARCEL
     implementation "org.parceler:parceler-api:$parceler_version"
     annotationProcessor "org.parceler:parceler:$parceler_version"
+
+    //PICASSO
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

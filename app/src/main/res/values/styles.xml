@@ -49,4 +49,32 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <style name="Widget.TravelGuide.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorAccent</item>
+    </style>
+
+    <style name="TextAppearance.TravelGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="TextAppearance.TravelGuide.textAppearanceSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style name="IconDownload">
+        <item name="android:tint">@color/icons</item>
+        <item name="android:src">@drawable/ic_offline</item>
+    </style>
+
+    <style name="IconWhiteBg">
+        <item name="android:tint">@color/iconsOnWhiteBG</item>
+        <item name="android:src">@drawable/ic_share</item>
+    </style>
+
 </resources>

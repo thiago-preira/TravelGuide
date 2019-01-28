@@ -9,6 +9,7 @@ public class Trip {
     private String location;
     private String startDate;
     private String endDate;
+    private String photoUrl;
 
     public Trip() {
     }
@@ -43,6 +44,14 @@ public class Trip {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     public String getDuration() {

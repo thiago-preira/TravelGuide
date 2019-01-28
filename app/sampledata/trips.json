@@ -1,0 +1,35 @@
+{
+  "trips": {
+    "qOErLrdYkyRLuv1NCoXZAhF6ikV2": [
+      {
+        "duration": "12 JAN - 20 FEV 2019",
+        "endDate": "23-01-2019",
+        "location": "Barcelona",
+        "startDate": "23-01-2019",
+        "tripId": "16f7881d-406c-4be5-ac5f-860bea58bef7",
+        "photoUrl": "https://lonelyplanetimages.imgix.net/a/g/hi/t/c81f09d36451a030f40f459726f31a96-barcelona.jpeg?sharp=10&vib=20&w=1200"
+      },
+      {
+        "endDate": "23-01-2019",
+        "duration": "12 JAN - 20 FEV 2019",
+        "location": "Egito",
+        "startDate": "23-01-2019",
+        "tripId": "16f7881d-406c-4be5-ac5f-860bea58bef7"
+      },
+      {
+        "location": "Paris",
+        "duration": "12 JAN - 20 FEV 2019",
+        "endDate": "23-01-2019",
+        "startDate": "23-01-2019",
+        "tripId": "16f7881d-406c-4be5-ac5f-860bea58bef7"
+      },
+      {
+        "location": "Bruxelas",
+        "duration": "12 JAN - 20 FEV 2019",
+        "endDate": "23-01-2019",
+        "startDate": "23-01-2019",
+        "tripId": "16f7881d-406c-4be5-ac5f-860bea58bef7"
+      }
+    ]
+  }
+}
