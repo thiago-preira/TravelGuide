@@ -1,9 +1,14 @@
 package com.udacity.android.travelguide.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import org.parceler.Parcel;
+
+@Parcel
 @IgnoreExtraProperties
-public class Site {
+public class Spot  implements Comparable{
 
     private String name;
     private String description;
@@ -11,7 +16,7 @@ public class Site {
     private Double latitude;
     private Double longitude;
 
-    public Site() {
+    public Spot() {
     }
 
     public String getName() {
@@ -52,5 +57,15 @@ public class Site {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        if( o == null)
+            return 0;
+        if(!(o instanceof Spot))
+            return 0;
+        Spot that = (Spot) o;
+        return this.getDate().compareTo(that.getDate());
     }
 }

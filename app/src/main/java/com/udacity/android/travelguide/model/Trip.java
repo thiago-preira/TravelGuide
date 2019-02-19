@@ -1,7 +1,16 @@
 package com.udacity.android.travelguide.model;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.udacity.android.travelguide.util.DateUtils;
 
+import org.parceler.Parcel;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Parcel
 @IgnoreExtraProperties
 public class Trip {
 
@@ -10,6 +19,7 @@ public class Trip {
     private String startDate;
     private String endDate;
     private String photoUrl;
+    private List<Spot> spots;
 
     public Trip() {
     }
@@ -54,7 +64,28 @@ public class Trip {
         return photoUrl;
     }
 
+    public List<Spot> getSpots() {
+        return spots;
+    }
+
+    public void setSpots(List<Spot> spots) {
+        this.spots = spots;
+    }
+
+    @Exclude
     public String getDuration() {
-        return "12 JAN - 20 FEV 2019";
+        return DateUtils.getDuration(startDate, endDate);
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("tripId", tripId);
+        result.put("location", location);
+        result.put("startDate", startDate);
+        result.put("endDate", endDate);
+        result.put("photoUrl", photoUrl);
+        result.put("spots", spots);
+        return result;
     }
 }

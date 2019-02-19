@@ -9,7 +9,7 @@
     app:cardElevation="4dp">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white">
@@ -21,21 +21,22 @@
             app:layout_constraintBottom_toTopOf="@id/tv_trip_destiny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
             <ImageView
                 android:id="@+id/iv_trip_photo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_height"
                 android:background="?attr/colorPrimaryDark"
                 android:contentDescription="@string/share_trip"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
+
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/card_height"
-                android:background="@drawable/scrim_background"/>
+                android:background="@drawable/scrim_background" />
         </FrameLayout>
-
 
 
         <ImageView
@@ -43,19 +44,19 @@
             style="@style/IconDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/download_trip"
             android:layout_margin="@dimen/trip_card_spacing"
+            android:contentDescription="@string/download_trip"
             app:layout_constraintBottom_toBottomOf="@id/iv_share"
             app:layout_constraintEnd_toEndOf="@id/iv_share"
-            app:layout_constraintVertical_bias="0.08"
             app:layout_constraintStart_toStartOf="@id/iv_share"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.08" />
 
         <TextView
             android:id="@+id/tv_trip_destiny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trip_card_spacing"
+            android:layout_margin="@dimen/trip_card_spacing"
             android:layout_marginTop="@dimen/trip_card_spacing"
             android:textAppearance="@style/TextAppearance.TravelGuide.Headline6"
             app:layout_constraintBottom_toTopOf="@id/tv_trip_duration"
@@ -70,8 +71,8 @@
             style="@style/IconWhiteBg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/trip_card_spacing"
             android:contentDescription="@string/share_trip"
-            android:layout_marginLeft="@dimen/trip_card_spacing"
             app:layout_constraintBottom_toBottomOf="@id/tv_trip_destiny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
@@ -80,13 +81,12 @@
 
         <TextView
             android:id="@+id/tv_trip_duration"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trip_card_spacing"
             android:layout_marginBottom="@dimen/trip_card_spacing"
             android:textAppearance="@style/TextAppearance.TravelGuide.textAppearanceSubtitle2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/tv_trip_destiny"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_trip_destiny"
             app:layout_constraintTop_toBottomOf="@id/tv_trip_destiny"
             tools:text="@sample/trips.json/trips/qOErLrdYkyRLuv1NCoXZAhF6ikV2/duration" />

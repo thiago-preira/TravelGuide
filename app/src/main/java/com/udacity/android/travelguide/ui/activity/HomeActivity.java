@@ -1,7 +1,15 @@
 package com.udacity.android.travelguide.ui.activity;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,10 +29,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.udacity.android.travelguide.R;
 import com.udacity.android.travelguide.model.Trip;
 import com.udacity.android.travelguide.ui.adapter.TripAdapter;
+import com.udacity.android.travelguide.ui.viewmodel.TripViewModel;
+import com.udacity.android.travelguide.util.DeviceUtils;
+
+import org.parceler.Parcels;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.udacity.android.travelguide.util.Constants.TRIP_KEY;
 
 public class HomeActivity extends BaseActivity {
 
@@ -32,41 +46,39 @@ public class HomeActivity extends BaseActivity {
 
     private RecyclerView mTripsRecyclerView;
     private TripAdapter mTripAdapter;
-    private DatabaseReference mDatabase;
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private String mUserId;
     private List<Trip> mTrips = new ArrayList<>();
-    private ValueEventListener mTripEventListener;
     private ProgressBar mTripsProgressBar;
+    private FloatingActionButton mAddTripFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUpToolbar();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         mTripsRecyclerView = findViewById(R.id.rv_trips);
         mTripsProgressBar = findViewById(R.id.pb_trips);
-
-        mUserId = getUid();
-
+        mAddTripFAB = findViewById(R.id.fab_add_trip);
         showProgress();
 
-        mTripEventListener = new ValueEventListener() {
+        mAddTripFAB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), TripActivity.class));
             }
+        });
 
+        TripViewModel viewModel = ViewModelProviders.of(this).get(TripViewModel.class);
+        LiveData<List<Trip>> liveData = viewModel.getDataSnapshotLiveData();
+        liveData.observe(this, new Observer<List<Trip>>() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                if (databaseError.getCode() != DatabaseError.DISCONNECTED) {
-                    Log.e(TAG, String.format("%s:%s", databaseError.getMessage(), databaseError.getDetails()));
+            public void onChanged(@Nullable List<Trip> trips) {
+                if (trips != null) {
+                    setAdapter(trips);
+                    setLayoutManager();
+                    hideProgress();
                 }
             }
-        };
-
-        mDatabase.child("trips").child(mUserId).addValueEventListener(mTripEventListener);
+        });
     }
 
     private void hideProgress() {
@@ -79,22 +91,24 @@ public class HomeActivity extends BaseActivity {
         mTripsRecyclerView.setVisibility(View.INVISIBLE);
     }
 
-
-    private void showData(DataSnapshot dataSnapshot) {
-        GenericTypeIndicator<List<Trip>> typeIndicator = new GenericTypeIndicator<List<Trip>>() {
-        };
-        mTrips = dataSnapshot.getValue(typeIndicator);
-        mTripsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setAdapter(List<Trip> trips) {
+        mTrips = trips;
         mTripAdapter = new TripAdapter(this, onTripClick(), mTrips);
         mTripsRecyclerView.setAdapter(mTripAdapter);
-        hideProgress();
+    }
+
+    private void setLayoutManager() {
+        mTripsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private TripAdapter.TripOnClickListener onTripClick() {
         return new TripAdapter.TripOnClickListener() {
             @Override
             public void onTripClick(View view, int position) {
-
+                Trip trip = mTrips.get(position);
+                Intent tripIntent = new Intent(getContext(), TripActivity.class);
+                tripIntent.putExtra(TRIP_KEY, Parcels.wrap(trip));
+                startActivity(tripIntent);
             }
         };
     }
@@ -118,26 +132,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void signOut() {
-        removeValueListener();
         FirebaseAuth.getInstance().signOut();
         startActivity(createIntentFor(SplashActivity.class));
     }
 
-    @Override
-    protected void onStop() {
-        removeValueListener();
-        super.onStop();
-    }
-
-    private void removeValueListener() {
-        if (mTripEventListener != null) {
-            mDatabase.removeEventListener(mTripEventListener);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        removeValueListener();
-        super.onDestroy();
-    }
 }

@@ -4,5 +4,6 @@
 
     <dimen name="trip_card_spacing">8dp</dimen>
     <dimen name="card_height">180dp</dimen>
+    <dimen name="ic_padding">20dp</dimen>
 
 </resources>

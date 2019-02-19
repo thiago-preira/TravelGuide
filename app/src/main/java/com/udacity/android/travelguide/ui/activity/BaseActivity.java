@@ -32,8 +32,8 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+    protected void setUpToolbar(int toolbarId) {
+        Toolbar toolbar = findViewById(toolbarId);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
@@ -84,8 +84,8 @@ public class BaseActivity extends AppCompatActivity {
         return new Intent(getContext(), activity);
     }
 
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    protected boolean isLandscapeMode(){
+        return getBoolean(R.bool.landscape);
     }
 
 }
