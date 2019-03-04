@@ -1,18 +1,12 @@
 package com.udacity.android.travelguide.ui.activity;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,21 +14,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 import com.udacity.android.travelguide.R;
 import com.udacity.android.travelguide.model.Trip;
 import com.udacity.android.travelguide.ui.adapter.TripAdapter;
-import com.udacity.android.travelguide.ui.viewmodel.TripViewModel;
-import com.udacity.android.travelguide.util.DeviceUtils;
+import com.udacity.android.travelguide.ui.viewmodel.TripsViewModel;
 
 import org.parceler.Parcels;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,16 +53,13 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        TripViewModel viewModel = ViewModelProviders.of(this).get(TripViewModel.class);
+        TripsViewModel viewModel = ViewModelProviders.of(this).get(TripsViewModel.class);
         LiveData<List<Trip>> liveData = viewModel.getDataSnapshotLiveData();
-        liveData.observe(this, new Observer<List<Trip>>() {
-            @Override
-            public void onChanged(@Nullable List<Trip> trips) {
-                if (trips != null) {
-                    setAdapter(trips);
-                    setLayoutManager();
-                    hideProgress();
-                }
+        liveData.observe(this, trips -> {
+            if (trips != null) {
+                setAdapter(trips);
+                setLayoutManager();
+                hideProgress();
             }
         });
     }
@@ -102,14 +85,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private TripAdapter.TripOnClickListener onTripClick() {
-        return new TripAdapter.TripOnClickListener() {
-            @Override
-            public void onTripClick(View view, int position) {
-                Trip trip = mTrips.get(position);
-                Intent tripIntent = new Intent(getContext(), TripActivity.class);
-                tripIntent.putExtra(TRIP_KEY, Parcels.wrap(trip));
-                startActivity(tripIntent);
-            }
+        return (view, position) -> {
+            Trip trip = mTrips.get(position);
+            Intent tripIntent = new Intent(getContext(), TripActivity.class);
+            tripIntent.putExtra(TRIP_KEY, Parcels.wrap(trip));
+            startActivity(tripIntent);
         };
     }
 

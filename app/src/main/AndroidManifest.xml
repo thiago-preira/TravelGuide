@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.SpotActivity"></activity>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -22,9 +23,11 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity" />
         <activity android:name=".ui.activity.TripActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.HomeActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.HomeActivity" />
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCM1JG9iUjfWE5FZrFxP_TpZMFn1udfu0A" />

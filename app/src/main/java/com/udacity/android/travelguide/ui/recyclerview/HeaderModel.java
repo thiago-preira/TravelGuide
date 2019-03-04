@@ -2,7 +2,7 @@ package com.udacity.android.travelguide.ui.recyclerview;
 
 import java.util.Objects;
 
-public class HeaderModel implements ListItem {
+public class HeaderModel implements ListItem<String> {
 
     String header;
 
@@ -14,6 +14,11 @@ public class HeaderModel implements ListItem {
 
     @Override
     public String getName() {
+        return header;
+    }
+
+    @Override
+    public String getData() {
         return header;
     }
 

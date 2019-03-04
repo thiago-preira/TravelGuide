@@ -30,4 +30,13 @@ public class DateUtils {
             return "";
         }
     }
+
+    public static Date fromString(String date) {
+        try {
+            return FORMAT.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
+        }
+    }
 }

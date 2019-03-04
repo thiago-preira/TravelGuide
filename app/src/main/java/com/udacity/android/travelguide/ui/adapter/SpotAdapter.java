@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.android.travelguide.R;
+import com.udacity.android.travelguide.model.Spot;
 import com.udacity.android.travelguide.ui.recyclerview.ChildModel;
 import com.udacity.android.travelguide.ui.recyclerview.ListItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,11 +21,13 @@ public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LayoutInflater inflater;
     private Context context;
     private List<ListItem> listItemArrayList;
+    private OnSpotClickListener mOnSpotClickListener;
 
-    public SpotAdapter( Context context, List<ListItem> listItemArrayList) {
+    public SpotAdapter( Context context, List<ListItem> listItemArrayList, OnSpotClickListener onSpotClickListener) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.listItemArrayList = listItemArrayList;
+        this.mOnSpotClickListener = onSpotClickListener;
     }
 
     @Override
@@ -69,6 +71,13 @@ public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             SpotViewHolder spotViewHolder = (SpotViewHolder) holder;
             spotViewHolder.mSpotNameTextView.setText(listItem.getName());
             spotViewHolder.mSpotDescriptionTextView.setText(listItem.getDescription());
+            if(mOnSpotClickListener!=null)
+            spotViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnSpotClickListener.onSpotClick(v,position);
+                }
+            });
         }
 
     }
@@ -96,5 +105,13 @@ public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mSpotDescriptionTextView = itemView.findViewById(R.id.tv_spot_description);
         }
 
+    }
+
+    public interface OnSpotClickListener{
+        void onSpotClick(View view, int position);
+    }
+
+    public ListItem getItem(int position){
+        return listItemArrayList.get(position);
     }
 }

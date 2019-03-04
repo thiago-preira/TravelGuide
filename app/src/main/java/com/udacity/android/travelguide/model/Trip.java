@@ -6,6 +6,7 @@ import com.udacity.android.travelguide.util.DateUtils;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,5 +88,20 @@ public class Trip {
         result.put("photoUrl", photoUrl);
         result.put("spots", spots);
         return result;
+    }
+
+    public void addSpot(Spot spot) {
+        if (spots == null) {
+            spots = new ArrayList<>();
+        }
+        spots.add(spot);
+    }
+
+    public Spot getSpot(int position) {
+        if(spots == null){
+            return null;
+        }
+
+        return spots.get(position);
     }
 }

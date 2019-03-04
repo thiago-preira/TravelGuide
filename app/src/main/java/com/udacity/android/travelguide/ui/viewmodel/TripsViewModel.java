@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TripViewModel extends ViewModel {
+public class TripsViewModel extends ViewModel {
     private static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private static final DatabaseReference TRIP_REFERENCE = FirebaseDatabase.getInstance()
             .getReference("/trips").child(USER_ID);

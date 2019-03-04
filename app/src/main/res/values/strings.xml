@@ -4,7 +4,6 @@
     <string name="share_trip">Compartilhar</string>
     <string name="download_trip">Salvar Offline</string>
 
-    <string name="google_places_api_key" translatable="false">AIzaSyCM1JG9iUjfWE5FZrFxP_TpZMFn1udfu0A</string>
     <string name="error_api_key">Google Places API incorreta</string>
     <string name="add_trip_title">Criar Viagem</string>
     <string name="select_place">Selecione o local</string>
@@ -14,4 +13,8 @@
     <string name="save">Salvar</string>
     <string name="trip_saved">Viagem salva</string>
     <string name="spot_header">Planejamento Diário</string>
+    <string name="spot_description">Informe uma descrição</string>
+    <string name="add_spot">Adicionar Local</string>
+    <string name="spot_required_message">Informe local e data</string>
+    <string name="spot_saved">Local adicionado</string>
 </resources>

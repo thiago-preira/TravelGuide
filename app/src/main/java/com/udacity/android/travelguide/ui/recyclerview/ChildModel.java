@@ -1,11 +1,14 @@
 package com.udacity.android.travelguide.ui.recyclerview;
 
+import com.udacity.android.travelguide.model.Spot;
+
 import java.util.Objects;
 
-public class ChildModel implements ListItem {
+public class ChildModel implements ListItem<Spot> {
 
     String child;
     String description;
+    Spot spot;
 
     public void setChild(String child) {
         this.child = child;
@@ -16,6 +19,10 @@ public class ChildModel implements ListItem {
         this.description = description;
     }
 
+    public void setSpot(Spot spot) {
+        this.spot = spot;
+    }
+
     @Override
     public boolean isHeader() {
         return false;
@@ -24,6 +31,11 @@ public class ChildModel implements ListItem {
     @Override
     public String getName() {
         return child;
+    }
+
+    @Override
+    public Spot getData() {
+        return spot;
     }
 
     public String getDescription() {

@@ -1,6 +1,7 @@
 package com.udacity.android.travelguide.ui.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.udacity.android.travelguide.BuildConfig;
 import com.udacity.android.travelguide.R;
 import com.udacity.android.travelguide.model.Spot;
 import com.udacity.android.travelguide.model.Trip;
@@ -44,8 +46,10 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.udacity.android.travelguide.util.Constants.ADD_SPOT_REQUEST_CODE;
 import static com.udacity.android.travelguide.util.Constants.AUTOCOMPLETE_REQUEST_CODE;
 import static com.udacity.android.travelguide.util.Constants.PHOTO_URL_TEMPLATE;
+import static com.udacity.android.travelguide.util.Constants.SPOT_KEY;
 import static com.udacity.android.travelguide.util.Constants.TRIP_KEY;
 
 public class AddTripFragment extends BaseFragment {
@@ -59,6 +63,7 @@ public class AddTripFragment extends BaseFragment {
     private DatabaseReference mDatabase;
     private static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private RecyclerView mSpotRecyclerView;
+    private SpotAdapter adapter;
 
     public static AddTripFragment newInstance(Trip trip) {
         AddTripFragment fragment = new AddTripFragment();
@@ -79,11 +84,16 @@ public class AddTripFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         Trip trip = Parcels.unwrap(getArguments().getParcelable(TRIP_KEY));
         if (trip != null) {
-            mTrip = trip;
-            mStartDateEditText.setText(mTrip.getStartDate());
-            mEndDateEditText.setText(mTrip.getEndDate());
-            setSpotList();
+            populate(trip);
         }
+    }
+
+    private void populate(Trip trip) {
+        mTrip = trip;
+        mStartDateEditText.setText(mTrip.getStartDate());
+        mEndDateEditText.setText(mTrip.getEndDate());
+        mPlacePickerEditText.setText(mTrip.getLocation());
+        setSpotList();
     }
 
     @Nullable
@@ -99,30 +109,29 @@ public class AddTripFragment extends BaseFragment {
     }
 
     private void setSpotList() {
-
-
-        List<ListItem> items = new ArrayList<>();
-        List<String> headers = new ArrayList<>();
-        List<Spot> spotList = mTrip.getSpots();
-        Collections.sort(spotList);
-
-
-        for (Spot spot : spotList) {
-            if (!headers.contains(spot.getDate())) {
-                HeaderModel header = new HeaderModel();
-                header.setHeader(DateUtils.dateAsString(spot.getDate()));
-                items.add(header);
-                headers.add(spot.getDate());
+        if (mTrip.getSpots() != null) {
+            List<ListItem> items = new ArrayList<>();
+            List<String> headers = new ArrayList<>();
+            List<Spot> spotList = mTrip.getSpots();
+            Collections.sort(spotList);
+            for (Spot spot : spotList) {
+                if (!headers.contains(spot.getDate())) {
+                    HeaderModel header = new HeaderModel();
+                    header.setHeader(DateUtils.dateAsString(spot.getDate()));
+                    items.add(header);
+                    headers.add(spot.getDate());
+                }
+                ChildModel itemModel = new ChildModel();
+                itemModel.setChild(spot.getName());
+                itemModel.setDescription(spot.getDescription());
+                itemModel.setSpot(spot);
+                items.add(itemModel);
             }
-            ChildModel itemModel = new ChildModel();
-            itemModel.setChild(spot.getName());
-            itemModel.setDescription(spot.getDescription());
-            items.add(itemModel);
-        }
 
-        SpotAdapter adapter = new SpotAdapter(getContext(), items);
-        mSpotRecyclerView.setAdapter(adapter);
-        mSpotRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            adapter = new SpotAdapter(getContext(), items,onStopClick());
+            mSpotRecyclerView.setAdapter(adapter);
+            mSpotRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        }
     }
 
     private void setEndDateEditText(View view) {
@@ -134,6 +143,7 @@ public class AddTripFragment extends BaseFragment {
                     (view1, year, month, dayOfMonth) -> {
                         String date = DateUtils.dateAsString(year, month, dayOfMonth);
                         mEndDateEditText.setText(date);
+                        mTrip.setEndDate(date);
                     },
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -150,6 +160,7 @@ public class AddTripFragment extends BaseFragment {
                     (view1, year, month, dayOfMonth) -> {
                         String date = DateUtils.dateAsString(year, month, dayOfMonth);
                         mStartDateEditText.setText(date);
+                        mTrip.setStartDate(date);
                     },
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -175,12 +186,18 @@ public class AddTripFragment extends BaseFragment {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 retrieveDataFromPlace(place);
-                ((TripActivity) getActivity()).buildToolbarWithTripData(mTrip);
+                ((TripActivity) getActivity()).buildWithTripData(mTrip);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 Status status = Autocomplete.getStatusFromIntent(data);
                 Log.i(TAG, status.getStatusMessage());
                 toast(getString(R.string.error_searching_places));
             } else if (resultCode == RESULT_CANCELED) {
+            }
+        } else if (requestCode == ADD_SPOT_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Spot spot = Parcels.unwrap(data.getParcelableExtra(SPOT_KEY));
+                mTrip.addSpot(spot);
+                setSpotList();
             }
         }
     }
@@ -189,9 +206,10 @@ public class AddTripFragment extends BaseFragment {
         mTrip.setLocation(place.getName());
         PhotoMetadata photoMetadata = place.getPhotoMetadatas().get(0);
         String photoUrl = String.format(PHOTO_URL_TEMPLATE,
-                photoMetadata.a(),
-                getString(R.string.google_places_api_key));
+                photoMetadata.a(), BuildConfig.GooglePlacesApiKey
+        );
         mTrip.setPhotoUrl(photoUrl);
+        mPlacePickerEditText.setText(mTrip.getLocation());
     }
 
     @Override
@@ -213,34 +231,6 @@ public class AddTripFragment extends BaseFragment {
     }
 
     private void saveTrip() {
-        mTrip.setStartDate(mStartDateEditText.getText().toString());
-        mTrip.setEndDate(mEndDateEditText.getText().toString());
-
-        List<Spot> spots = new ArrayList<>();
-                Spot spot2 = new Spot();
-        spot2.setName("Lugar 2");
-        spot2.setDescription("Descricao lugar 2");
-        spot2.setDate(mEndDateEditText.getText().toString());
-
-        Spot spot1 = new Spot();
-        spot1.setName("Lugar 1");
-        spot1.setDescription("Descricao lugar 1");
-        spot1.setDate(mStartDateEditText.getText().toString());
-
-        spots.add(spot1);
-        spots.add(spot2);
-
-        for (int i = 0; i < 10; i++) {
-            Spot spot3 = new Spot();
-            spot3.setName("Lugar 3");
-            spot3.setDescription("Descricao lugar 3");
-            spot3.setDate(mStartDateEditText.getText().toString());
-            spots.add(spot3);
-        }
-
-
-        mTrip.setSpots(spots);
-
         if (mTrip.getTripId() == null) {
             String key = mDatabase.child("/trips").child(USER_ID).push().getKey();
             mTrip.setTripId(key);
@@ -249,5 +239,26 @@ public class AddTripFragment extends BaseFragment {
             mDatabase.child("/trips").child(USER_ID).child(mTrip.getTripId()).updateChildren(mTrip.toMap());
         }
 
+    }
+
+    private SpotAdapter.OnSpotClickListener onStopClick(){
+        return (view, position) -> {
+            ListItem item = adapter.getItem(position);
+            Spot spot = (Spot) item.getData();
+            if(spot!= null) {
+                String stringUri = String.format("geo:0,0?q=%f,%f(%s)", spot.getLatitude(), spot.getLongitude(),spot.getName());
+                Uri gmmIntentUri = Uri.parse(stringUri);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getArguments().putParcelable(TRIP_KEY, Parcels.wrap(mTrip));
     }
 }
