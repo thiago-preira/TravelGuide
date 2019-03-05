@@ -7,13 +7,16 @@
 
     <TextView
         android:id="@+id/tv_spot_header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Programação dia 10"
-        style="@style/TextAppearance.TravelGuide.Subtitle1" />
+        android:background="@color/colorPrimaryDark"
+        style="@style/TextAppearance.TravelGuide.Header" />
 
 </android.support.constraint.ConstraintLayout>

@@ -12,9 +12,11 @@
     <string name="select_end_date">Selecione a data de término</string>
     <string name="save">Salvar</string>
     <string name="trip_saved">Viagem salva</string>
-    <string name="spot_header">Planejamento Diário</string>
+    <string name="spot_header">Planejamento</string>
     <string name="spot_description">Informe uma descrição</string>
     <string name="add_spot">Adicionar Local</string>
     <string name="spot_required_message">Informe local e data</string>
     <string name="spot_saved">Local adicionado</string>
+    <string name="mock_spot_description">Uma descricao muito longa com a forma de cdemosntrar como o layout se comporta com esse tamanho todo de caracteres</string>
+    <string name="appwidget_text">TravelGuide</string>
 </resources>

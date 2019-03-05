@@ -71,6 +71,7 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             app:title="@string/add_trip_title"
+            style="@style/Widget.TravelGuide.Toolbar"
             android:visibility="gone"/>
 
 

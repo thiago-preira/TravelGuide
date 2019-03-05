@@ -104,4 +104,9 @@ public class Trip {
 
         return spots.get(position);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s",location, getDuration());
+    }
 }

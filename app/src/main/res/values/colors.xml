@@ -8,9 +8,10 @@
     <color name="colorAccent">#CDDC39</color>
     <color name="primaryText">#4B4A4A</color>
     <color name="secondaryText">#A7A5A5</color>
+    <color name="secondaryTextOnBlue">#757474</color>
     <color name="icons">#FFFFFF</color>
     <color name="iconsOnWhiteBG">#A7A5A5</color>
-    <color name="divider">#BDBDBD</color>
+    <color name="divider">#545454</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

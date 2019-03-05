@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -129,6 +130,9 @@ public class AddTripFragment extends BaseFragment {
             }
 
             adapter = new SpotAdapter(getContext(), items,onStopClick());
+            DividerItemDecoration divider = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+            divider.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
+            mSpotRecyclerView.addItemDecoration(divider);
             mSpotRecyclerView.setAdapter(adapter);
             mSpotRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         }

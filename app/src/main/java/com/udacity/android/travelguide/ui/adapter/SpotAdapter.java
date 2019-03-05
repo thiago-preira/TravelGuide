@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.udacity.android.travelguide.R;
@@ -72,12 +73,7 @@ public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             spotViewHolder.mSpotNameTextView.setText(listItem.getName());
             spotViewHolder.mSpotDescriptionTextView.setText(listItem.getDescription());
             if(mOnSpotClickListener!=null)
-            spotViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnSpotClickListener.onSpotClick(v,position);
-                }
-            });
+            spotViewHolder.mSpotDirectionsImageView.setOnClickListener(v -> mOnSpotClickListener.onSpotClick(v,position));
         }
 
     }
@@ -97,12 +93,14 @@ public class SpotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         TextView mSpotNameTextView;
         TextView mSpotDescriptionTextView;
+        ImageView mSpotDirectionsImageView;
 
         public SpotViewHolder(View itemView) {
             super(itemView);
 
             mSpotNameTextView = itemView.findViewById(R.id.tv_spot_name);
             mSpotDescriptionTextView = itemView.findViewById(R.id.tv_spot_description);
+            mSpotDirectionsImageView = itemView.findViewById(R.id.iv_spot_directions);
         }
 
     }
