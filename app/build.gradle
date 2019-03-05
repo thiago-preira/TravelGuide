@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'travelguide'
+            keyPassword 'travelguide'
+            storeFile file('../app/keystore/travelguide.jks')
+            storePassword 'travelguide'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.udacity.android.travelguide"
@@ -10,15 +18,18 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         debug {
             buildConfigField 'String', "GooglePlacesApiKey", TRAVELGUIDE_APP_GOOGLE_PLACES_API_KEY
+            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "GooglePlacesApiKey", TRAVELGUIDE_APP_GOOGLE_PLACES_API_KEY
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {

@@ -47,24 +47,12 @@
             android:layout_marginTop="@dimen/trip_card_spacing"
             android:textAppearance="@style/TextAppearance.TravelGuide.Headline"
             app:layout_constraintBottom_toTopOf="@id/tv_trip_duration"
-            app:layout_constraintEnd_toStartOf="@drawable/ic_share"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/photo_frame"
+            app:layout_constraintStart_toStartOf="@id/photo_frame"
             app:layout_constraintTop_toBottomOf="@id/photo_frame"
+            app:layout_constraintHorizontal_bias="0"
             tools:text="@sample/trips.json/trips/qOErLrdYkyRLuv1NCoXZAhF6ikV2/location" />
 
-
-        <ImageView
-            android:id="@+id/iv_share"
-            style="@style/IconWhiteBg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/trip_card_spacing"
-            android:contentDescription="@string/share_trip"
-            app:layout_constraintBottom_toBottomOf="@id/tv_trip_destiny"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintStart_toEndOf="@id/tv_trip_destiny"
-            app:layout_constraintTop_toTopOf="@id/tv_trip_destiny" />
 
         <TextView
             android:id="@+id/tv_trip_duration"
