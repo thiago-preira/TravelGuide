@@ -19,4 +19,5 @@
     <string name="spot_saved">Local adicionado</string>
     <string name="mock_spot_description">Uma descricao muito longa com a forma de cdemosntrar como o layout se comporta com esse tamanho todo de caracteres</string>
     <string name="appwidget_text">TravelGuide</string>
+    <string name="add_trip_tip">Clique no + para adicionar uma viagem</string>
 </resources>

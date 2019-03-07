@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.udacity.android.travelguide.R;
@@ -35,6 +36,7 @@ public class HomeActivity extends BaseActivity {
     private List<Trip> mTrips = new ArrayList<>();
     private ProgressBar mTripsProgressBar;
     private FloatingActionButton mAddTripFAB;
+    private TextView mAddTripTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +46,23 @@ public class HomeActivity extends BaseActivity {
         mTripsRecyclerView = findViewById(R.id.rv_trips);
         mTripsProgressBar = findViewById(R.id.pb_trips);
         mAddTripFAB = findViewById(R.id.fab_add_trip);
+        mAddTripTip = findViewById(R.id.tv_add_trip_tip);
         showProgress();
 
-        mAddTripFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), TripActivity.class));
-            }
-        });
+        mAddTripFAB.setOnClickListener(v -> startActivity(new Intent(getContext(), TripActivity.class)));
 
         TripsViewModel viewModel = ViewModelProviders.of(this).get(TripsViewModel.class);
         LiveData<List<Trip>> liveData = viewModel.getDataSnapshotLiveData();
         liveData.observe(this, trips -> {
-            if (trips != null) {
+            if (trips != null && trips.size() >0) {
                 setAdapter(trips);
                 setLayoutManager();
                 hideProgress();
+                mAddTripTip.setVisibility(View.GONE);
+            }else{
+                mTripsRecyclerView.setVisibility(View.GONE);
+                hideProgress();
+                mAddTripTip.setVisibility(View.VISIBLE);
             }
         });
     }
