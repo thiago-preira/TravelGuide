@@ -17,7 +17,7 @@ public class TripAppWidgetProvider extends AppWidgetProvider {
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                        int appWidgetId, List<Spot> spots) {
         mSpots = spots;
-        String widgetText = "Falhou";
+        String widgetText = context.getString(R.string.no_spots_added);
         if (mSpots != null) {
             widgetText = getSpotsAsText();
         }
