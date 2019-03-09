@@ -60,8 +60,8 @@
                 android:text="@string/add_trip_tip"
                 android:visibility="gone"
                 android:layout_marginTop="300dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_gravity="center_horizontal"
                 style="@style/TextAppearance.TravelGuide.Subtitle1"/>
         </FrameLayout>
@@ -73,7 +73,7 @@
         style="@style/Widget.TravelGuide.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         app:layout_anchor="@id/trip_container"
         app:layout_anchorGravity="bottom|right|end"

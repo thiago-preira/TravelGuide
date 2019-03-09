@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:drawableLeft="@drawable/ic_pin"
+            android:drawableStart="@drawable/ic_pin"
             android:drawablePadding="@dimen/ic_padding"
             android:focusable="false"
             android:hint="@string/select_place" />
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:drawableLeft="@drawable/ic_cal"
+            android:drawableStart="@drawable/ic_cal"
             android:drawablePadding="@dimen/ic_padding"
             android:focusable="false"
             android:hint="@string/select_start_date" />

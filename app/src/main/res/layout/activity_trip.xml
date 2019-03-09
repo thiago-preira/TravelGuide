@@ -86,7 +86,7 @@
         app:srcCompat="@drawable/ic_add"
         style="@style/Widget.TravelGuide.FloatingActionButton"
         app:layout_anchor="@id/spot_grid"
-        android:layout_gravity="bottom|right"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_gravity="bottom|end"
+        app:layout_anchorGravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>
