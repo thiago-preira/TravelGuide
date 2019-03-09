@@ -91,14 +91,5 @@
         <item name="android:textColor">@color/secondaryText</item>
     </style>
 
-    <style name="IconDownload">
-        <item name="android:tint">@color/icons</item>
-        <item name="android:src">@drawable/ic_offline</item>
-    </style>
-
-    <style name="IconWhiteBg">
-        <item name="android:tint">@color/iconsOnWhiteBG</item>
-        <item name="android:src">@drawable/ic_share</item>
-    </style>
 
 </resources>

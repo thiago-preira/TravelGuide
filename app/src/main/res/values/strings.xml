@@ -2,7 +2,6 @@
     <string name="app_name">TravelGuide</string>
     <string name="logout">Logout</string>
     <string name="share_trip">Compartilhar</string>
-    <string name="download_trip">Salvar Offline</string>
 
     <string name="error_api_key">Google Places API incorreta</string>
     <string name="add_trip_title">Criar Viagem</string>
@@ -20,4 +19,6 @@
     <string name="mock_spot_description">Uma descricao muito longa com a forma de cdemosntrar como o layout se comporta com esse tamanho todo de caracteres</string>
     <string name="appwidget_text">TravelGuide</string>
     <string name="add_trip_tip">Clique no + para adicionar uma viagem</string>
+    <string name="image_description">Imagem da viagem</string>
+    <string name="directions_description">Localização do ponto</string>
 </resources>

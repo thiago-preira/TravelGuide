@@ -39,5 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_spot_description"
         app:layout_constraintTop_toTopOf="@id/tv_spot_description"
-        app:srcCompat="@drawable/ic_directions" />
+        app:srcCompat="@drawable/ic_directions"
+        android:contentDescription="@string/directions_description"/>
 </android.support.constraint.ConstraintLayout>
