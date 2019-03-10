@@ -1,8 +1,10 @@
 package com.udacity.android.travelguide.ui.activity;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,7 +94,15 @@ public class HomeActivity extends BaseActivity {
             Trip trip = mTrips.get(position);
             Intent tripIntent = new Intent(getContext(), TripActivity.class);
             tripIntent.putExtra(TRIP_KEY, Parcels.wrap(trip));
-            startActivity(tripIntent);
+            // Check if we're running on Android 5.0 or higher
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(tripIntent,
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            } else {
+                startActivity(tripIntent);
+            }
+
+
         };
     }
 
