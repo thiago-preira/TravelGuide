@@ -22,4 +22,6 @@
     <string name="image_description">Imagem da viagem</string>
     <string name="directions_description">Localização do ponto</string>
     <string name="no_spots_added">Você precisa adicionar um local a viagem</string>
+    <string name="adding_trip_message">Salvando viagem...</string>
+    <string name="adding_trip_message_title">Aguarde</string>
 </resources>

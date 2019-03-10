@@ -23,11 +23,9 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.android.travelguide.BuildConfig;
 import com.udacity.android.travelguide.R;
+import com.udacity.android.travelguide.data.AddTripAsyncTask;
 import com.udacity.android.travelguide.model.Spot;
 import com.udacity.android.travelguide.model.Trip;
 import com.udacity.android.travelguide.ui.activity.TripActivity;
@@ -61,8 +59,6 @@ public class AddTripFragment extends BaseFragment {
     private EditText mStartDateEditText;
     private EditText mEndDateEditText;
     private Trip mTrip = new Trip();
-    private DatabaseReference mDatabase;
-    private static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private RecyclerView mSpotRecyclerView;
     private SpotAdapter adapter;
 
@@ -101,7 +97,6 @@ public class AddTripFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_trip, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         setPlacePickerEditText(view);
         setStartDateEditText(view);
         setEndDateEditText(view);
@@ -228,21 +223,14 @@ public class AddTripFragment extends BaseFragment {
             case R.id.save_trip:
                 saveTrip();
                 toast(getString(R.string.trip_saved));
-                getActivity().finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void saveTrip() {
-        if (mTrip.getTripId() == null) {
-            String key = mDatabase.child("/trips").child(USER_ID).push().getKey();
-            mTrip.setTripId(key);
-            mDatabase.child("/trips").child(USER_ID).child(key).setValue(mTrip);
-        } else {
-            mDatabase.child("/trips").child(USER_ID).child(mTrip.getTripId()).updateChildren(mTrip.toMap());
-        }
-
+        AddTripAsyncTask asyncTask = new AddTripAsyncTask(getContext(),getActivity());
+        asyncTask.execute(mTrip);
     }
 
     private SpotAdapter.OnSpotClickListener onStopClick(){
